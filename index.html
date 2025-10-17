@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Flight - Book Your Journey</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-plane"></i>
+                <span>Dynamic Flight</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#search">Search Flights</a></li>
+                <li><a href="#bookings">My Bookings</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Find Your Perfect Flight</h1>
+            <p>Book flights to destinations worldwide with the best prices and service</p>
+        </div>
+    </section>
+
+    <!-- Flight Search Form -->
+    <section id="search" class="search-section">
+        <div class="container">
+            <div class="search-form-container">
+                <h2>Search Flights</h2>
+                <form id="flightSearchForm" class="search-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tripType">Trip Type</label>
+                            <select id="tripType" name="tripType">
+                                <option value="roundtrip">Round Trip</option>
+                                <option value="oneway">One Way</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="passengers">Passengers</label>
+                            <select id="passengers" name="passengers">
+                                <option value="1">1 Passenger</option>
+                                <option value="2">2 Passengers</option>
+                                <option value="3">3 Passengers</option>
+                                <option value="4">4 Passengers</option>
+                                <option value="5">5+ Passengers</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="from">From</label>
+                            <select id="from" name="from" required>
+                                <option value="">Select departure city</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="to">To</label>
+                            <select id="to" name="to" required>
+                                <option value="">Select destination city</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="departureDate">Departure Date</label>
+                            <input type="date" id="departureDate" name="departureDate" required>
+                        </div>
+                        <div class="form-group" id="returnDateGroup">
+                            <label for="returnDate">Return Date</label>
+                            <input type="date" id="returnDate" name="returnDate">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="class">Class</label>
+                            <select id="class" name="class">
+                                <option value="economy">Economy</option>
+                                <option value="business">Business</option>
+                                <option value="first">First Class</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="search-btn">
+                                <i class="fas fa-search"></i>
+                                Search Flights
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flight Results -->
+    <section id="results" class="results-section" style="display: none;">
+        <div class="container">
+            <h2>Available Flights</h2>
+            <div class="results-header">
+                <div class="results-info">
+                    <span id="searchInfo"></span>
+                </div>
+                <div class="sort-options">
+                    <label for="sortBy">Sort by:</label>
+                    <select id="sortBy">
+                        <option value="price">Price</option>
+                        <option value="duration">Duration</option>
+                        <option value="departure">Departure Time</option>
+                    </select>
+                </div>
+            </div>
+            <div id="flightResults" class="flight-results"></div>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content modal-animate">
+            <span class="close">&times;</span>
+            <h2>Complete Your Booking</h2>
+
+            <!-- Stepper -->
+            <div class="stepper" id="bookingStepper">
+                <div class="step active" data-step-index="0">Passenger</div>
+                <div class="step" data-step-index="1">Extras</div>
+                <div class="step" data-step-index="2">Payment</div>
+                <div class="step" data-step-index="3">Review</div>
+            </div>
+
+            <form id="bookingForm" novalidate>
+                <div class="passenger-info booking-step" data-step="0">
+                    <h3>Passenger Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flight-summary">
+                    <h3>Flight Summary</h3>
+                    <div id="selectedFlightInfo"></div>
+                </div>
+                
+                <!-- Extras Step -->
+                <div class="payment-info booking-step" data-step="1">
+                    <h3>Extras</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="baggage">Baggage</label>
+                            <select id="baggage" name="baggage">
+                                <option value="0">No extra baggage (₹0)</option>
+                                <option value="1">+10 kg (₹800)</option>
+                                <option value="2">+20 kg (₹1500)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="meal">Meal Preference</label>
+                            <select id="meal" name="meal">
+                                <option value="none">No meal (₹0)</option>
+                                <option value="veg">Vegetarian (₹250)</option>
+                                <option value="nonveg">Non-Veg (₹300)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="seatPref">Seat Preference</label>
+                            <select id="seatPref" name="seatPref">
+                                <option value="auto">Auto-assign (₹0)</option>
+                                <option value="window">Window (₹150)</option>
+                                <option value="aisle">Aisle (₹150)</option>
+                                <option value="extra_legroom">Extra Legroom (₹600)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="seat-map">
+                        <h4>Select Seats</h4>
+                        <div id="seatGrid" class="seat-grid" aria-label="Seat selection grid"></div>
+                        <div class="seat-legend">
+                            <span class="seat available"></span> Available
+                            <span class="seat selected"></span> Selected
+                            <span class="seat taken"></span> Taken
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Step -->
+                <div class="payment-info booking-step" data-step="2">
+                    <h3>Payment Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="expiryDate">Expiry Date</label>
+                            <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="123" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardName">Name on Card</label>
+                            <input type="text" id="cardName" name="cardName" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="total-price">
+                    <h3>Total Price: <span id="totalPrice"></span></h3>
+                </div>
+
+                <!-- Review Step -->
+                <div class="payment-info booking-step" data-step="3">
+                    <h3>Review & Confirm</h3>
+                    <div id="reviewDetails"></div>
+                    <div id="bookingInlineMessage" class="message" style="display:none"></div>
+                </div>
+
+                <div class="booking-actions">
+                    <button type="button" class="book-btn" id="backStepBtn" disabled>Back</button>
+                    <button type="button" class="book-btn" id="nextStepBtn">Next</button>
+                    <button type="submit" class="book-btn" id="confirmBookingBtn" style="display:none;">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toasts -->
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Success Splash -->
+    <div id="successSplash" class="success-splash" aria-hidden="true">
+        <div class="splash-card">
+            <div class="splash-icon">✅</div>
+            <div class="splash-title">Booking Confirmed!</div>
+            <div class="splash-sub">We saved your reservation and added it to My Bookings.</div>
+        </div>
+    </div>
+
+    <!-- My Bookings Section -->
+    <section id="bookings" class="bookings-section">
+        <div class="container">
+            <h2>My Bookings</h2>
+            <div id="bookingsList" class="bookings-list">
+                <p class="no-bookings">No bookings found. Search and book a flight to see your reservations here.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+91-9063655644</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>gsasank007@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>4-6-48, Samalkot, Andhra Pradesh</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Dynamic Flight</h3>
+                    <p>Your trusted partner for air travel worldwide.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#search">Search Flights</a></li>
+                        <li><a href="#bookings">My Bookings</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Dynamic Flight. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
